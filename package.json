@@ -1,0 +1,26 @@
+{
+  "name": "human-theremin",
+  "version": "1.0.0",
+  "description": "Real time audio feedback for human joint angles (such as opening of the hips into a straight handstand) using a camera and a pose detection machine learning model from TensorFlow.js in the browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sgilroy/human-theremin.git"
+  },
+  "author": "scottjgilroy@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sgilroy/human-theremin/issues"
+  },
+  "homepage": "https://github.com/sgilroy/human-theremin",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  },
+  "devDependencies": {
+    "tone": "^14.8.40"
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Human Theremin</title>
+
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="parent">
+            <section id="demos" class="invisible">
+                <div id="liveView" class="camView">
+                    <video id="video" autoplay style="
+                    -webkit-transform: scaleX(-1);
+                    transform: scaleX(-1);
+                    width: auto;
+                    height: auto;
+                    " width="640" height="480">
+                    </video>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="js/custom.js"></script>
+    </div>
+    </div>
+</body>
+
+</html

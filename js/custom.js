@@ -1,9 +1,13 @@
+// Use the anchor tag (text after the hash) to pick a joint set
+const jointSetName = window.location.hash && window.location.hash.slice(1);
+
 const synth = new Tone.Synth().toDestination();
 
 const video = document.getElementById('video');
 const liveView = document.getElementById('liveView');
 const demosSection = document.getElementById('demos');
 // const enableWebcamButton = document.getElementById('webcamButton');
+const jointSetIndicator = document.getElementById('jointSetIndicator');
 
 //attach a click listener to a play button
 video?.addEventListener('click', async () => {
@@ -102,19 +106,37 @@ const lerp = (x, y, a) => x * (1 - a) + y * a;
 async function predictWebcam() {
   let poses = await detector.estimatePoses(video);
 
+  // console.log('predictWebcam', poses.length);
   for (let n = 0; n < poses.length; n++) {
     // Only proceed if we are over threshold for the pose
     if (poses[n].score > 0.33) {
       // For the meaning of the indexes in keypoints, see:
       // https://github.com/tensorflow/tfjs-models/blob/master/pose-detection/README.md#blazepose-keypoints-used-in-mediapipe-blazepose
-      const joints = [
-        [12, 14, 16], // right elboow
-        [11, 13, 15], // left elbow
-        // [24, 12, 14], // right shoulder
-        // [23, 11, 13], // left shoulder
-        // [12, 24, 26], // right hip
-        // [11, 23, 25], // left hip
-      ]
+      const jointSets = {
+        elbows: [
+          [12, 14, 16], // right elboow
+          [11, 13, 15], // left elbow
+        ],
+        hips: [
+          [12, 24, 26], // right hip
+          [11, 23, 25], // left hip
+        ],
+        shoulders: [
+          [24, 12, 14], // right shoulder
+          [23, 11, 13], // left shoulder
+        ],
+        knees: [
+          [24, 26, 28], // right knee
+          [23, 25, 27], // left knee
+        ],
+        wrists: [
+          [14, 16, 20], // right wrist
+          [13, 15, 19], // left wrist
+        ],
+      };
+
+      jointSetIndicator.innerHTML = jointSets[jointSetName] ? jointSetName : 'elbows (default)';
+      const joints = jointSets[jointSetName] || jointSets['elbows'];
       
       const angles = [];
       for (const points of joints) {
@@ -152,6 +174,7 @@ let detector;
     modelType: 'full'
   };
   detector = await poseDetection.createDetector(model, detectorConfig);
+  console.log('pose detection detector created');
   demosSection.classList.remove('invisible');
   onLoad();
 })();

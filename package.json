@@ -4,7 +4,7 @@
   "description": "Real time audio feedback for human joint angles (such as opening of the hips into a straight handstand) using a camera and a pose detection machine learning model from TensorFlow.js in the browser.",
   "main": "index.js",
   "scripts": {
-    "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
+    "watch": "cross-env NODE_ENV=development parcel index.html --open",
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint ."
   },

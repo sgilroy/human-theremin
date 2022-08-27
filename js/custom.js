@@ -12,7 +12,7 @@ const demosSection = document.getElementById('demos');
 const jointSetIndicator = document.getElementById('jointSetIndicator');
 
 //attach a click listener to a play button
-video?.addEventListener('click', async () => {
+video.addEventListener('click', async () => {
 	await Tone.start();
 	console.log('audio is ready');
 

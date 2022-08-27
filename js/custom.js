@@ -1,5 +1,7 @@
-// Use the anchor tag (text after the hash) to pick a joint set
-const jointSetName = window.location.hash && window.location.hash.slice(1);
+import {Camera} from './camera.js';
+import * as params from './params';
+
+let camera;
 
 const synth = new Tone.Synth().toDestination();
 
@@ -54,18 +56,18 @@ async function enableCam(event) {
     video: true
   };
 
-  // Activate the webcam stream.
-  navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-    video.srcObject = stream;
-    video.addEventListener('loadeddata', handleVideoLoaded);
-  });
-
+  await initializeCamera();
+  predictWebcam();
 }
 
 let videoRect;
 async function handleVideoLoaded() {
   videoRect = video.getBoundingClientRect(); 
   predictWebcam();
+}
+
+async function initializeCamera() {
+  camera = await Camera.setupCamera({targetFPS: 60, sizeOption: '640 X 480'});
 }
 
 function calculateDistance(p1, p2) {
@@ -135,6 +137,8 @@ async function predictWebcam() {
         ],
       };
 
+      // Use the anchor tag (text after the hash) to pick a joint set
+      const jointSetName = window.location.hash && window.location.hash.slice(1);
       jointSetIndicator.innerHTML = jointSets[jointSetName] ? jointSetName : 'elbows (default)';
       const joints = jointSets[jointSetName] || jointSets['elbows'];
       
@@ -145,6 +149,7 @@ async function predictWebcam() {
 
         const pointScoreThreshold = 0.33;
         if (keypoints3D[0].score > pointScoreThreshold && keypoints3D[1].score > pointScoreThreshold && keypoints3D[2].score > pointScoreThreshold) {
+          poses[n].keypoints[points[1]].isActiveJoint = true;
           const angle = calculateAngle(keypoints3D[0], keypoints3D[1], keypoints3D[2]);
           // console.log('angle', angle);
 
@@ -160,6 +165,12 @@ async function predictWebcam() {
     }
   }
 
+  camera.drawCtx();
+
+  if (poses && poses.length > 0) {
+    camera.drawResults(poses);
+  }
+
   // Call this function again to keep predicting when the browser is ready.
   window.requestAnimationFrame(predictWebcam);  
 }
@@ -168,6 +179,7 @@ let detector;
 (async () => {
   // detector = await poseDetection.createDetector(poseDetection.SupportedModels.MoveNet);
   const model = poseDetection.SupportedModels.BlazePose;
+  params.STATE.model = model;
   const detectorConfig = {
     // runtime: 'mediapipe', // or 'tfjs'
     runtime: 'tfjs',

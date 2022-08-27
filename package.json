@@ -4,8 +4,9 @@
   "description": "Real time audio feedback for human joint angles (such as opening of the hips into a straight handstand) using a camera and a pose detection machine learning model from TensorFlow.js in the browser.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "live-server"
+    "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
+    "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,47 @@
   },
   "homepage": "https://github.com/sgilroy/human-theremin",
   "dependencies": {
+    "@mediapipe/pose": "^0.5.1635988162",
+    "@tensorflow-models/pose-detection": "^2.0.0",
+    "@tensorflow/tfjs-backend-wasm": "^3.20.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.20.0",
+    "@tensorflow/tfjs-converter": "^3.20.0",
+    "@tensorflow/tfjs-core": "^3.20.0",
     "live-server": "^1.2.2"
   },
   "devDependencies": {
-    "tone": "^14.8.40"
-  }
+    "@babel/core": "^7.18.13",
+    "@babel/plugin-transform-runtime": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "clang-format": "^1.8.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.23.0",
+    "eslint-config-google": "^0.14.0",
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "tone": "^14.8.40",
+    "yalc": "^1.0.0-pre.53"
+  },
+  "resolutions": {
+    "is-svg": "4.3.1"
+  },
+  "eslintConfig": {
+    "extends": "google",
+    "rules": {
+      "require-jsdoc": 0,
+      "valid-jsdoc": 0
+    },
+    "env": {
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    }
+  },
+  "eslintIgnore": [
+    "dist/"
+  ]
 }

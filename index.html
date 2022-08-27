@@ -15,19 +15,28 @@
     <div class="container">
         <div class="parent">
             <section id="demos" class="invisible">
-                <div id="liveView" class="camView">
+                <div id="liveView" class="canvas-wrapper">
+                    <canvas id="output"></canvas>
                     <video id="video" autoplay style="
                     -webkit-transform: scaleX(-1);
                     transform: scaleX(-1);
+                    visibility: hidden;
                     width: auto;
                     height: auto;
-                    " width="640" height="480">
+                    ">
                     </video>
                 </div>
             </section>
         </div>
     </div>
-    <span id="jointSetIndicator">Loading...</span>
+    <p>
+        <span id="jointSetIndicator">Loading...</span>
+        <a href="#shoulders">shoulders</a>
+        <a href="#elbows">elbows</a>
+        <a href="#wrists">wrists</a>
+        <a href="#hips">hips</a>
+        <a href="#knees">knees</a>
+    </p>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
@@ -35,8 +44,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
     <script src="https://unpkg.com/tone"></script>
     <script src="js/custom.js"></script>
-    </div>
-    </div>
 </body>
 
 </html>
